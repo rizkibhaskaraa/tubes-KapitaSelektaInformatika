@@ -83,8 +83,8 @@ public class TubesKapita {
     public void openDataset() throws FileNotFoundException{  
         String currentDirectory = System.getProperty("user.dir");
         String loc =  currentDirectory+"\\src\\tubes\\kapita\\";
-        Scanner jadwal = new Scanner(new File(loc+"jadwal.txt"));
-        Scanner anggota = new Scanner(new File(loc+"anggota.txt"));
+        Scanner jadwal = new Scanner(new File(loc+"KapitaJadwal.txt"));
+        Scanner anggota = new Scanner(new File(loc+"DataKapita.txt"));
         
 
         String temp;
