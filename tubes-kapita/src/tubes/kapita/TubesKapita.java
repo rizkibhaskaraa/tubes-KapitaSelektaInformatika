@@ -54,13 +54,13 @@ public class TubesKapita {
     public TubesKapita(){
 
         Scanner sc = new Scanner(System.in);
-        System.out.print("Inputkan nilai popsize: ");
+        System.out.print("Masukkan Nilai Populasi: ");
         this.popSize = sc.nextInt();
-        System.out.print("Inputkan jumlah maksimum iterasi: ");
+        System.out.print("Masukkan Jumlah Maksimum Iterasi: ");
         this.maxIterasi = sc.nextInt();
-        System.out.print("Inputkan jumlah anggota per-shift: ");
+        System.out.print("masukkan Jumlah Anggota Per-shift: ");
         this.jmlKuotaShift = sc.nextInt();
-        System.out.print("Inputkan jumlah harinya: ");
+        System.out.print("Masukkan Jumlah Hari Piket: ");
         this.jmlHari = sc.nextInt();
         
         /* Parameter dibawah ini merupakan contoh condition yang harus 
