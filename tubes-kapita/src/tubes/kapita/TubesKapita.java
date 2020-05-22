@@ -1,7 +1,7 @@
- /* Program ini dibuat untuk memenuhi nilai UAS Matakuliah Kapita Selekta 
+ /* Program Algoritma Genetika ini dibuat untuk memenuhi nilai UAS Matakuliah Kapita Selekta 
  Informatika - ITERA tahun ajaran 2020
 
- Anggota Kelompok  ( Kapita RA )
+ Anggota Kelompok 2 ( Kapita-RA )
 
 Rizki Bhaskara Mulya Efendi - 14117084
 Laurensius Joshua Anrico Agustinus - 14117141
@@ -11,18 +11,15 @@ Muhammad Nur Faqqih - 14117168
  */
 package tubes.kapita;
 
-
-
 // Libraries yang dibutuhkan untuk menjalan kan program
 
+import java.util.Collections;
+import java.util.Random;
+import java.util.ArrayList;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Collections;
-import java.util.Random;
-
 
 
 
@@ -30,24 +27,24 @@ public class TubesKapita {
 
     // Deklarasi Variabel
 
+  
+    private final double pc;
+    private final int jmlHari;
+    private final int jmlKromosom;
+    private final int jmlKuotaShift;
     private final int popSize;
     private final int maxIterasi;
-    private final int jmlIndeksAnggota;
-    private final double pc;
     private final double pm;
-    private final int jmlHari;
-    private final int jmlKuotaShift;
-    private final int jmlKromosom;
+    private final int jmlIndeksAnggota;
 
-    private double p[][];
-    private double pTerbaik[];
+    private String namaAnggota[][];  
+    private int dataAnggota[][];
+    
     private double cc[][];
     private final double cm[][];
-     
-    private int dataAnggota[][];
-    private String namaAnggota[][]; 
-
- 
+    private double p[][];
+    private double pTerbaik[];
+    
     // Deklarasi Main 
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -60,13 +57,13 @@ public class TubesKapita {
     public TubesKapita(){
 
         Scanner sc = new Scanner(System.in);
-        System.out.print("Masukkan nilai popsize: ");
+        System.out.print("Inputkan nilai popsize: ");
         this.popSize = sc.nextInt();
-        System.out.print("Masukkan jumlah max iterasi: ");
+        System.out.print("Inputkan jumlah maksimum iterasi: ");
         this.maxIterasi = sc.nextInt();
-        System.out.print("Masukkan jumlah anggota per-shift: ");
+        System.out.print("Inputkan jumlah anggota per-shift: ");
         this.jmlKuotaShift = sc.nextInt();
-        System.out.print("Masukkan jumlah hari: ");
+        System.out.print("Inputkan jumlah harinya: ");
         this.jmlHari = sc.nextInt();
         
         /* Parameter dibawah ini merupakan contoh condition yang harus 
@@ -129,8 +126,6 @@ public class TubesKapita {
         Scanner anggota = new Scanner(new File(loc+"DataKapita.txt"));
         
 
-
-
         String temp;
         int counter = 0;
 
@@ -147,8 +142,7 @@ public class TubesKapita {
             }
             counter++;
         }
-        
- 
+       
         String temp2;
         int counter2 = 0;
 
@@ -168,8 +162,6 @@ public class TubesKapita {
     }
 
 
-
-    
     public void inisialisasi(){
         int counter = 0;
         int Min = 0;
@@ -207,9 +199,8 @@ public class TubesKapita {
 
     public void crossover(){
         if (this.pc > 0) {
-                 
-
-            // Deklarasi 
+             
+            // Disini kita meelakukan sebuah deklarasi 
 
             int p1 = 0 + (int) (Math.random() * (((this.popSize - 1) - 0) + 1));
             int p2 = 0 + (int) (Math.random() * (((this.popSize - 1) - 0) + 1));
@@ -453,9 +444,7 @@ public class TubesKapita {
         for (int i = 0; i < this.maxIterasi; i++) {
             
             crossover();
-               
-            mutation();
-             
+            mutation();   
             seleksi();
             cariIndividuTerbaik();
                
@@ -603,7 +592,7 @@ public class TubesKapita {
     
 
         /* Method yang berfungsi menampilkan hasil penjadwalan berdasarkan hari 
-        dan shift pagi atau siang berdasarkan penjadwalan yang sudah dilakukan
+        dan shift pagi atau sore berdasarkan penjadwalan yang sudah dilakukan
 
 
             */
@@ -637,7 +626,7 @@ public class TubesKapita {
                         shift = "Pagi";
                         break;
                     case 1:
-                        shift = "Siang";
+                        shift = "Sore";
                         break;
                 }
                 System.out.printf("Shift %-8s: ", shift);
