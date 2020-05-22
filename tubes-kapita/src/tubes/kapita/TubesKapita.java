@@ -1,14 +1,14 @@
- /* Program Algoritma Genetika ini dibuat untuk memenuhi nilai UAS Matakuliah Kapita Selekta 
- Informatika - ITERA tahun ajaran 2020
+/* Program Algoritma Genetika ini dibuat untuk memenuhi nilai UAS Matakuliah Kapita Selekta 
+Informatika - ITERA tahun ajaran 2020
 
- Anggota Kelompok 2 ( Kapita-RA )
+Anggota Kelompok 2 ( Kapita-RA )
 
 Rizki Bhaskara Mulya Efendi - 14117084
 Laurensius Joshua Anrico Agustinus - 14117141
 LEO VIRANDA MILLENNIUM - 14117167
 Muhammad Nur Faqqih - 14117168
 
- */
+*/
 package tubes.kapita;
 
 // Libraries yang dibutuhkan untuk menjalan kan program
@@ -21,12 +21,9 @@ import java.util.Arrays;
 import java.io.File;
 import java.util.Scanner;
 
-
-
 public class TubesKapita {
 
     // Deklarasi Variabel
-
   
     private final double pc;
     private final int jmlHari;
@@ -57,13 +54,13 @@ public class TubesKapita {
     public TubesKapita(){
 
         Scanner sc = new Scanner(System.in);
-        System.out.print("Inputkan nilai popsize: ");
+        System.out.print("Masukkan Nilai Populasi: ");
         this.popSize = sc.nextInt();
-        System.out.print("Inputkan jumlah maksimum iterasi: ");
+        System.out.print("Masukkan Jumlah Maksimum Iterasi: ");
         this.maxIterasi = sc.nextInt();
-        System.out.print("Inputkan jumlah anggota per-shift: ");
+        System.out.print("masukkan Jumlah Anggota Per-shift: ");
         this.jmlKuotaShift = sc.nextInt();
-        System.out.print("Inputkan jumlah harinya: ");
+        System.out.print("Masukkan Jumlah Hari Piket: ");
         this.jmlHari = sc.nextInt();
         
         /* Parameter dibawah ini merupakan contoh condition yang harus 
@@ -91,7 +88,8 @@ public class TubesKapita {
             misalkan : -0.65 mejadi 0.0 
                         2,46 menjadi 3.0
         
-            */
+        */
+        
         int osCrossover = (int) Math.ceil(this.pc*this.popSize);
         int osMutation = (int) Math.ceil(this.pm*this.popSize);
         this.cc = new double[osCrossover][this.jmlKromosom + 1];
@@ -118,20 +116,19 @@ public class TubesKapita {
                         -> berisi jadwal yang tersedia atau tidak , dengan diwakilkan
                         0 dan 1 , yang berarti tersedia atau tidak 
 
-          */
+        */
 
         String currentDirectory = System.getProperty("user.dir");
         String loc =  currentDirectory+"\\src\\tubes\\kapita\\";
         Scanner jadwal = new Scanner(new File(loc+"KapitaJadwal.txt"));
         Scanner anggota = new Scanner(new File(loc+"DataKapita.txt"));
-        
 
         String temp;
         int counter = 0;
 
         /* Kode dibawah ini berfungsi untuk mengambil data dari jadwal selama 
-            masih ada isi node yang setelah dari gerbong yang terakhir diambil
-            ( hasNext ), kemudian dimasukan kedalam variabel dataAnggota 
+           masih ada isi node yang setelah dari gerbong yang terakhir diambil
+           ( hasNext ), kemudian dimasukan kedalam variabel dataAnggota 
         */
          
         while(jadwal.hasNext()){
@@ -146,9 +143,9 @@ public class TubesKapita {
         String temp2;
         int counter2 = 0;
 
-          /* Kode dibawah ini berfungsi untuk mengambil data dari anggota selama 
-            masih ada isi node yang setelah dari gerbong yang terakhir diambil
-            ( hasNext ), kemudian dimasukan kedalam variabel NamaAnggota 
+        /* Kode dibawah ini berfungsi untuk mengambil data dari anggota selama 
+           masih ada isi node yang setelah dari gerbong yang terakhir diambil
+           ( hasNext ), kemudian dimasukan kedalam variabel NamaAnggota 
         */
 
         while(anggota.hasNextLine()){
@@ -160,7 +157,6 @@ public class TubesKapita {
             counter2++;
         }
     }
-
 
     public void inisialisasi(){
         int counter = 0;
@@ -188,8 +184,6 @@ public class TubesKapita {
                     arr.clear();
                 }
             }
-
-    
             this.p[i][this.p[i].length - 1] = hitungFitness(this.p[i]);
             counter = 0;
         }
@@ -204,7 +198,6 @@ public class TubesKapita {
 
             int p1 = 0 + (int) (Math.random() * (((this.popSize - 1) - 0) + 1));
             int p2 = 0 + (int) (Math.random() * (((this.popSize - 1) - 0) + 1));
-            
          
             int cutPoint = 1 + (int) (Math.random() * (((this.jmlKromosom - 2) - 1) + 1));
             
@@ -227,8 +220,8 @@ public class TubesKapita {
     }
 
     /* Method dibawah ini berfungsi untuk proses mutasi , setelah didaptakannya
-        individu atau gen yaitu pos1 dan pos2 
-        */
+       individu atau gen yaitu pos1 dan pos2 
+    */
 
     public void mutation(){
         if (this.pm > 0) {
@@ -250,11 +243,10 @@ public class TubesKapita {
         }
     }
     
-       /* Method dibawah ini berfungsi untuk melakukan seleksi untuk mendapatkan 
-            Gen atau invidu terbaik yang dipilih berdasarkan nilai fitness yang
-            terbaik
-
-       */
+    /* Method dibawah ini berfungsi untuk melakukan seleksi untuk mendapatkan 
+       Gen atau invidu terbaik yang dipilih berdasarkan nilai fitness yang
+       terbaik
+    */
 
     public void seleksi(){
         double popSeleksi[][] = new double[this.popSize+this.cc.length+this.cm.length]
@@ -290,7 +282,7 @@ public class TubesKapita {
                 }
             }
         }
-       
+
         double p_rw[][];
         
         p_rw = elitism(popSeleksi);      
@@ -298,7 +290,7 @@ public class TubesKapita {
         updatePopulasi(p_rw);
     }
     
-        //  Mengupdate populasi setelah didapatkannya individu baru 
+    //  Mengupdate populasi setelah didapatkannya individu baru 
 
     public void updatePopulasi(double pSeleksi[][]){
         this.p = pSeleksi;
@@ -331,11 +323,11 @@ public class TubesKapita {
         return hasil;
     }
     
-        /* Fungsi yang berguna untuk menghitung nilai fitness dari setiap individu
-            Nilai fitness , didapatkan dari data jadwal yang tersedia yang ada di file 
-            KapitaJadwal.txt , yang kami diterjemahkan menjadi nilai fitness dari 
-            sebuah individu
-            */
+    /* Fungsi yang berguna untuk menghitung nilai fitness dari setiap individu
+       Nilai fitness , didapatkan dari data jadwal yang tersedia yang ada di file 
+       KapitaJadwal.txt , yang kami diterjemahkan menjadi nilai fitness dari 
+       sebuah individu
+    */
 
     public double hitungFitness(double kromosom[]){
         double fitness;
@@ -373,9 +365,10 @@ public class TubesKapita {
         return fitness;
     }
 
-        /* Fungsi yang akan menghitung berapa banyak anggota yang tidak kebagian
-        piket , jika memang ternyata input yang diberikan tidak dapat memberikan hasil
-        yang maksimal agar setiap anggota bisa melakukan piket */ 
+    /* Fungsi yang akan menghitung berapa banyak anggota yang tidak kebagian
+       piket , jika memang ternyata input yang diberikan tidak dapat memberikan hasil
+       yang maksimal agar setiap anggota bisa melakukan piket 
+    */ 
 
     public int anggotaTidakKebagianPiket(double kromosom[]){        
         int iAnggotaPiket[] = removeDuplicates(kromosom);
@@ -413,7 +406,6 @@ public class TubesKapita {
         }return ret;
     }
 
-
     // Method yang berfugnsi untuk memilih individu terbaik yang tersedia didalam data
     
     public void cariIndividuTerbaik(){
@@ -431,8 +423,7 @@ public class TubesKapita {
             this.pTerbaik = this.pTerbaik;
         }else{
             this.pTerbaik = tempPTerbaik;
-        }
-        
+        } 
     }
 
     // Method utama yang berisi penjalanan dari semua fungsi dan method yang diperlukan
@@ -448,7 +439,7 @@ public class TubesKapita {
             seleksi();
             cariIndividuTerbaik();
                
-                printFitnessIndividuTerbaik();
+            printFitnessIndividuTerbaik();
                 
         }
         printIndividuTerbaik();
@@ -508,7 +499,7 @@ public class TubesKapita {
         System.out.println();
     }
     
-        // menampilkan data mutasi yang telah terjadi
+    // menampilkan data mutasi yang telah terjadi
 
     public void printMutation(){
         System.out.println("Mutation: ");
@@ -589,13 +580,11 @@ public class TubesKapita {
         }
         return ret;
     }
-    
 
-        /* Method yang berfungsi menampilkan hasil penjadwalan berdasarkan hari 
+    /* Method yang berfungsi menampilkan hasil penjadwalan berdasarkan hari 
         dan shift pagi atau sore berdasarkan penjadwalan yang sudah dilakukan
-
-
-            */
+    */
+    
     public void decoding(){
         int counter = 0;
         System.out.println("Hasil Penjadwalan Piket: ");
