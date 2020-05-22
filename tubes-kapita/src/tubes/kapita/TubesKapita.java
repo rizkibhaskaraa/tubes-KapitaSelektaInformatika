@@ -1,46 +1,54 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+ /* Program Algoritma Genetika ini dibuat untuk memenuhi nilai UAS Matakuliah Kapita Selekta 
+ Informatika - ITERA tahun ajaran 2020
 
+ Anggota Kelompok 2 ( Kapita-RA )
+
+Rizki Bhaskara Mulya Efendi - 14117084
+Laurensius Joshua Anrico Agustinus - 14117141
+LEO VIRANDA MILLENNIUM - 14117167
+Muhammad Nur Faqqih - 14117168
+
+ */
 package tubes.kapita;
 
-import java.util.ArrayList;
+// Libraries yang dibutuhkan untuk menjalan kan program
+
 import java.util.Collections;
 import java.util.Random;
-import java.io.File;
+import java.util.ArrayList;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
+import java.io.File;
 import java.util.Scanner;
 
-/**
- *
- * @author Acer
- */
+
+
 public class TubesKapita {
+
+    // Deklarasi Variabel
+
+  
+    private final double pc;
     private final int jmlHari;
-    private final int jmlKuotaShift;
     private final int jmlKromosom;
+    private final int jmlKuotaShift;
     private final int popSize;
     private final int maxIterasi;
-    private final int jmlIndeksAnggota;
-    private final double pc;
     private final double pm;
+    private final int jmlIndeksAnggota;
+
+    private String namaAnggota[][];  
+    private int dataAnggota[][];
     
-    private double p[][];
-    private double pTerbaik[];
     private double cc[][];
     private final double cm[][];
-     
-    private int dataAnggota[][];
-    private String namaAnggota[][]; 
+    private double p[][];
+    private double pTerbaik[];
+    
+    // Deklarasi Main 
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) throws FileNotFoundException {
-        // TODO code application logic here
+    
 	TubesKapita tk = new TubesKapita();
         tk.openDataset();
         tk.prosesTubesKapita();
@@ -49,14 +57,17 @@ public class TubesKapita {
     public TubesKapita(){
 
         Scanner sc = new Scanner(System.in);
-        System.out.print("Masukkan nilai popsize: ");
+        System.out.print("Inputkan nilai popsize: ");
         this.popSize = sc.nextInt();
-        System.out.print("Masukkan jumlah max iterasi: ");
+        System.out.print("Inputkan jumlah maksimum iterasi: ");
         this.maxIterasi = sc.nextInt();
-        System.out.print("Masukkan jumlah anggota per-shift: ");
+        System.out.print("Inputkan jumlah anggota per-shift: ");
         this.jmlKuotaShift = sc.nextInt();
-        System.out.print("Masukkan jumlah hari: ");
+        System.out.print("Inputkan jumlah harinya: ");
         this.jmlHari = sc.nextInt();
+        
+        /* Parameter dibawah ini merupakan contoh condition yang harus 
+        dipenuhi saat menjaalakan program */
         
         //this.popSize = 3;
         //this.maxIterasi = 250;
@@ -70,6 +81,17 @@ public class TubesKapita {
         this.pc = 0.5;
         this.pm = 0.2;
         
+        /* membuat sebuah variabel dengan menggunakan fungs ceil, yang 
+            berfungsi menghasilkan sebuat bilangan dari parameter yang berikan
+            yang mana bilangannnya berupa sebuah bilangan yang beruapa pembulatan
+            dari parameter yang diberikan
+
+            pembulatan berdasarkan ke arah yang besar
+
+            misalkan : -0.65 mejadi 0.0 
+                        2,46 menjadi 3.0
+        
+            */
         int osCrossover = (int) Math.ceil(this.pc*this.popSize);
         int osMutation = (int) Math.ceil(this.pm*this.popSize);
         this.cc = new double[osCrossover][this.jmlKromosom + 1];
@@ -81,6 +103,23 @@ public class TubesKapita {
     }
     
     public void openDataset() throws FileNotFoundException{  
+
+        /* Data yang menjadi acuan dalam program ini diambil dari luar program
+            yang mana ada di direktori package dari program ini
+
+            Ada 2 file yang berisi data yang diperlukan dalam menjalankan program ini
+            Yaitu : 1. DataKapita.txt 
+                        -> berisi data-data nama mahasiswa , yang akan dijadikan data
+                        dari nama-nama yang diacak untuk mendapatkan jadwal piket 
+                        sesuai dengan ketersediaan jadwalnya menggunakan konsep algoritma
+                        genetika
+
+                    2. KapitaJadwal.txt
+                        -> berisi jadwal yang tersedia atau tidak , dengan diwakilkan
+                        0 dan 1 , yang berarti tersedia atau tidak 
+
+          */
+
         String currentDirectory = System.getProperty("user.dir");
         String loc =  currentDirectory+"\\src\\tubes\\kapita\\";
         Scanner jadwal = new Scanner(new File(loc+"KapitaJadwal.txt"));
@@ -89,6 +128,12 @@ public class TubesKapita {
 
         String temp;
         int counter = 0;
+
+        /* Kode dibawah ini berfungsi untuk mengambil data dari jadwal selama 
+            masih ada isi node yang setelah dari gerbong yang terakhir diambil
+            ( hasNext ), kemudian dimasukan kedalam variabel dataAnggota 
+        */
+         
         while(jadwal.hasNext()){
             temp = jadwal.next();
             String []arr = temp.split(",");
@@ -97,10 +142,15 @@ public class TubesKapita {
             }
             counter++;
         }
-        
- 
+       
         String temp2;
         int counter2 = 0;
+
+          /* Kode dibawah ini berfungsi untuk mengambil data dari anggota selama 
+            masih ada isi node yang setelah dari gerbong yang terakhir diambil
+            ( hasNext ), kemudian dimasukan kedalam variabel NamaAnggota 
+        */
+
         while(anggota.hasNextLine()){
             temp2 = anggota.nextLine();
             String []arr = temp2.split(",");
@@ -110,12 +160,15 @@ public class TubesKapita {
             counter2++;
         }
     }
-    
+
+
     public void inisialisasi(){
         int counter = 0;
         int Min = 0;
         int Max = this.jmlIndeksAnggota - 1;
         Random r = new Random();
+
+        // inisialisasi setelah data dikumpulkan dari input
         
         for (int i = 0; i < this.popSize; i++) {
             for (int j = 0; j < this.jmlHari; j++) {  
@@ -141,9 +194,14 @@ public class TubesKapita {
             counter = 0;
         }
     }
+
+    // Method dibawah ini berfungsi untuk proses cross over 
+
     public void crossover(){
         if (this.pc > 0) {
-                 
+             
+            // Disini kita meelakukan sebuah deklarasi 
+
             int p1 = 0 + (int) (Math.random() * (((this.popSize - 1) - 0) + 1));
             int p2 = 0 + (int) (Math.random() * (((this.popSize - 1) - 0) + 1));
             
@@ -153,6 +211,9 @@ public class TubesKapita {
             double tempCC[][] = new double[this.cc.length][this.jmlKromosom + 1];
             System.arraycopy(this.p[p1], 0, tempCC[0], 0, this.jmlKromosom);
             System.arraycopy(this.p[p2], 0, tempCC[1], 0, this.jmlKromosom);
+
+            // Pengesetan nilai 
+
             for (int i = 0; i < this.jmlKromosom; i++) {
                 if (i >= cutPoint) {
                     tempCC[0][i] = this.p[p2][i];
@@ -164,8 +225,16 @@ public class TubesKapita {
             System.arraycopy(tempCC, 0, this.cc, 0, tempCC.length);
         }
     }
+
+    /* Method dibawah ini berfungsi untuk proses mutasi , setelah didaptakannya
+        individu atau gen yaitu pos1 dan pos2 
+        */
+
     public void mutation(){
         if (this.pm > 0) {
+
+            // Deklarasi
+
             int p1 = 0 + (int) (Math.random() * (((this.popSize - 1) - 0) + 1));
             Random r = new Random();
             int pos1 = 0 + (int) (Math.random() * (((this.jmlKromosom - 1) - 0) + 1));
@@ -181,6 +250,12 @@ public class TubesKapita {
         }
     }
     
+       /* Method dibawah ini berfungsi untuk melakukan seleksi untuk mendapatkan 
+            Gen atau invidu terbaik yang dipilih berdasarkan nilai fitness yang
+            terbaik
+
+       */
+
     public void seleksi(){
         double popSeleksi[][] = new double[this.popSize+this.cc.length+this.cm.length]
                                 [this.jmlKromosom + 1];
@@ -223,6 +298,8 @@ public class TubesKapita {
         updatePopulasi(p_rw);
     }
     
+        //  Mengupdate populasi setelah didapatkannya individu baru 
+
     public void updatePopulasi(double pSeleksi[][]){
         this.p = pSeleksi;
     }
@@ -239,6 +316,8 @@ public class TubesKapita {
         return hasil;
     }
     
+
+
     public double[][] rouletteWheel(double sel[][], double prob[][]){
         double hasil[][] = new double[this.p.length][this.p[0].length];
         for (int i = 0; i < hasil.length; i++) {
@@ -252,6 +331,12 @@ public class TubesKapita {
         return hasil;
     }
     
+        /* Fungsi yang berguna untuk menghitung nilai fitness dari setiap individu
+            Nilai fitness , didapatkan dari data jadwal yang tersedia yang ada di file 
+            KapitaJadwal.txt , yang kami diterjemahkan menjadi nilai fitness dari 
+            sebuah individu
+            */
+
     public double hitungFitness(double kromosom[]){
         double fitness;
         int penalti1 = 0, penalti2 = 0, penalti3 = 0, penalti4 = 0, 
@@ -287,6 +372,11 @@ public class TubesKapita {
         fitness = (double) 1 / (1 + totalPenalti + tidakKebagianPiket);
         return fitness;
     }
+
+        /* Fungsi yang akan menghitung berapa banyak anggota yang tidak kebagian
+        piket , jika memang ternyata input yang diberikan tidak dapat memberikan hasil
+        yang maksimal agar setiap anggota bisa melakukan piket */ 
+
     public int anggotaTidakKebagianPiket(double kromosom[]){        
         int iAnggotaPiket[] = removeDuplicates(kromosom);
         int iAnggotaTidakPiket[] = new int[this.namaAnggota.length-iAnggotaPiket.length];                
@@ -302,6 +392,9 @@ public class TubesKapita {
             }
         }return iAnggotaTidakPiket.length;
     }
+
+    // Menghapus array yang duplikat ( jika ada )
+
     public int[] removeDuplicates(int[] arr){
         boolean set[] = new boolean[1001];
         int totalItems = 0;
@@ -319,9 +412,12 @@ public class TubesKapita {
             }
         }return ret;
     }
+
+
+    // Method yang berfugnsi untuk memilih individu terbaik yang tersedia didalam data
     
     public void cariIndividuTerbaik(){
-        double max = 0.0;
+        double max = 0.0; 
         double tempPTerbaik[] = new double[this.p[0].length];
         // cari individu terbaik dalam populasi
         for (int i = 0; i < this.popSize; i++) {
@@ -338,6 +434,8 @@ public class TubesKapita {
         }
         
     }
+
+    // Method utama yang berisi penjalanan dari semua fungsi dan method yang diperlukan
     
     public void prosesTubesKapita(){
         inisialisasi();
@@ -346,9 +444,7 @@ public class TubesKapita {
         for (int i = 0; i < this.maxIterasi; i++) {
             
             crossover();
-               
-            mutation();
-             
+            mutation();   
             seleksi();
             cariIndividuTerbaik();
                
@@ -386,6 +482,8 @@ public class TubesKapita {
         return random;
     }
     
+    // Menampilkan kromosom yang telah di dapatkan datanya
+
     public void printKromosom(){
         System.out.println("Kromosom: ");
         for (int i = 0; i < this.popSize; i++) {
@@ -397,6 +495,8 @@ public class TubesKapita {
         System.out.println();
     }
     
+    // menampilkan data crossover yang telah terjadi
+
     public void printCrossover(){
         System.out.println("Crossover: ");
         for (double[] cc1 : this.cc) {
@@ -408,6 +508,8 @@ public class TubesKapita {
         System.out.println();
     }
     
+        // menampilkan data mutasi yang telah terjadi
+
     public void printMutation(){
         System.out.println("Mutation: ");
         for (double[] cm1 : this.cm) {
@@ -418,6 +520,8 @@ public class TubesKapita {
         }
         System.out.println();
     }
+
+    // Menampilkan individu terbaik yang telah di lakukan seleksi
     
     public void printIndividuTerbaik(){
         System.out.println("Individu Terbaik: ");
@@ -426,11 +530,15 @@ public class TubesKapita {
         }
         System.out.println("\n");
     }
+
+    // Menampilkan nilai fitness dari individu terbaik yang telah di lakukan seleksi
     
     public void printFitnessIndividuTerbaik(){
         System.out.println(this.pTerbaik[this.pTerbaik.length-1]);
     }
     
+    // Menampilkan data Anggota yang mendapat piket dan yang tidak 
+
     public void printTidakPiket(){        
         int iAnggotaPiket[] = removeDuplicates(this.pTerbaik);
         int iAnggotaTidakPiket[] = new int[this.namaAnggota.length-iAnggotaPiket.length];        
@@ -482,6 +590,12 @@ public class TubesKapita {
         return ret;
     }
     
+
+        /* Method yang berfungsi menampilkan hasil penjadwalan berdasarkan hari 
+        dan shift pagi atau sore berdasarkan penjadwalan yang sudah dilakukan
+
+
+            */
     public void decoding(){
         int counter = 0;
         System.out.println("Hasil Penjadwalan Piket: ");
@@ -512,7 +626,7 @@ public class TubesKapita {
                         shift = "Pagi";
                         break;
                     case 1:
-                        shift = "Siang";
+                        shift = "Sore";
                         break;
                 }
                 System.out.printf("Shift %-8s: ", shift);
