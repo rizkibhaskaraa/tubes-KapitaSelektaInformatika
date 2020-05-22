@@ -593,7 +593,7 @@ public class TubesKapita {
     
     public void decoding(){
         int counter = 0;
-        System.out.println("Hasil Penjadwalan Piket: ");
+        System.out.println("Ouput Hasil dari Penjadwalan Piket Sekretariat HMIF: ");
         for (int m = 0; m < this.jmlHari; m++) {
             String hari = "";
             switch (m) {
