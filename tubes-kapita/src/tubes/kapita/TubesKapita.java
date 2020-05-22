@@ -52,16 +52,22 @@ public class TubesKapita {
     }
     
     public TubesKapita(){
-
+        System.out.println("*************************************************************");
+        System.out.println("=============================================================");
+        System.out.println("Selamat Datang di Aplikasi Penjadwalan Piket Sekretariat HMIF");
+        System.out.println("=============================================================\n");
+        
         Scanner sc = new Scanner(System.in);
-        System.out.print("Masukkan Nilai Populasi: ");
+        System.out.print("Inputkan Nilai Populasi: ");
         this.popSize = sc.nextInt();
-        System.out.print("Masukkan Jumlah Maksimum Iterasi: ");
+        System.out.print("Inputkan Jumlah Maksimum Iterasi: ");
         this.maxIterasi = sc.nextInt();
-        System.out.print("masukkan Jumlah Anggota Per-shift: ");
+        System.out.print("Inputkan Jumlah Anggota Per-shift: ");
         this.jmlKuotaShift = sc.nextInt();
-        System.out.print("Masukkan Jumlah Hari Piket: ");
+        System.out.print("Inputkan Jumlah Hari Piket: ");
         this.jmlHari = sc.nextInt();
+        System.out.println("\n");
+        System.out.println("*************************************************************");
         
         /* Parameter dibawah ini merupakan contoh condition yang harus 
         dipenuhi saat menjaalakan program */
