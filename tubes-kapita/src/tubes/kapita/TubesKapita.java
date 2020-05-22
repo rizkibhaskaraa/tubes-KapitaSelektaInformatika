@@ -52,7 +52,7 @@ public class TubesKapita {
     }
     
     public TubesKapita(){
-        System.out.println("*************************************************************");
+        System.out.println("*************************************************************\n");
         System.out.println("=============================================================");
         System.out.println("Selamat Datang di Aplikasi Penjadwalan Piket Sekretariat HMIF");
         System.out.println("=============================================================\n");
