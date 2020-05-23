@@ -52,16 +52,22 @@ public class TubesKapita {
     }
     
     public TubesKapita(){
-
+        System.out.println("*************************************************************\n");
+        System.out.println("=============================================================");
+        System.out.println("Selamat Datang di Aplikasi Penjadwalan Piket Sekretariat HMIF");
+        System.out.println("=============================================================\n");
+        
         Scanner sc = new Scanner(System.in);
-        System.out.print("Masukkan Nilai Populasi: ");
+        System.out.print("Inputkan Nilai Populasi: ");
         this.popSize = sc.nextInt();
-        System.out.print("Masukkan Jumlah Maksimum Iterasi: ");
+        System.out.print("Inputkan Jumlah Maksimum Iterasi: ");
         this.maxIterasi = sc.nextInt();
-        System.out.print("masukkan Jumlah Anggota Per-shift: ");
+        System.out.print("Inputkan Jumlah Anggota Per-shift: ");
         this.jmlKuotaShift = sc.nextInt();
-        System.out.print("Masukkan Jumlah Hari Piket: ");
+        System.out.print("Inputkan Jumlah Hari Piket: ");
         this.jmlHari = sc.nextInt();
+        System.out.println("\n");
+        System.out.println("*************************************************************");
         
         /* Parameter dibawah ini merupakan contoh condition yang harus 
         dipenuhi saat menjaalakan program */
@@ -538,7 +544,7 @@ public class TubesKapita {
             System.out.print(iAnggotaPiket[x]+" ");
         }
         System.out.println();
-        System.out.println("jumlah anggota yang dapat jadwal piket: "+iAnggotaPiket.length);
+        System.out.println("Jumlah Massa HMIF yang dapat Jadwal Piket: "+iAnggotaPiket.length);
         
         int counter = 0, counter2 = 0;
         for (int i = 0; i < this.namaAnggota.length; i++) {
@@ -557,7 +563,7 @@ public class TubesKapita {
             System.out.print(iAnggotaTidakPiket[x]+" ");
         }
         System.out.println();
-        System.out.println("jumlah anggota yang tidak dapat jadwal piket: "+iAnggotaTidakPiket.length);
+        System.out.println("Jumlah Massa HMIF yang tidak dapat Jadwal Piket: "+iAnggotaTidakPiket.length);
     }
     
     public int[] removeDuplicates(double[] arr){
@@ -587,7 +593,7 @@ public class TubesKapita {
     
     public void decoding(){
         int counter = 0;
-        System.out.println("Hasil Penjadwalan Piket: ");
+        System.out.println("Output Hasil dari Penjadwalan Piket Sekretariat HMIF: ");
         for (int m = 0; m < this.jmlHari; m++) {
             String hari = "";
             switch (m) {
